@@ -45,7 +45,7 @@ vector<int> extract_shortest_path(const vector<int> &distances, const vector<int
     while (-1 != (tgt = previous[tgt]))
         path.push_back(tgt);
 
-    ranges::reverse(path);
+    reverse(path.begin(), path.end());
     return path;
 }
 

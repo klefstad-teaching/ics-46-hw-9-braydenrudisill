@@ -4,7 +4,6 @@
 #include <queue>
 #include <limits>
 #include <stack>
-#include <ranges>
 
 using namespace std;
 constexpr int INF = numeric_limits<int>::max();
