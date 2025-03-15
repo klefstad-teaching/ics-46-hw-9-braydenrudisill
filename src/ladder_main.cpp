@@ -8,8 +8,7 @@ int main() {
     set<string> words;
     load_words(words, "src/words.txt");
     cout << "loaded words" << endl;
-    for (const string& s : generate_word_ladder("cat", "dog", words))
-        cout << s << ' ';
-    cout << endl;
+    auto ladder = generate_word_ladder("cat", "dog", words);
+    print_word_ladder(ladder);
     return 0;
 }

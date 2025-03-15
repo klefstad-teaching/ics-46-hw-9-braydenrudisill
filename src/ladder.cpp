@@ -63,13 +63,13 @@ bool is_adjacent(string s1, string s2) {
     return edits <= 1;
 }
 
-vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
-    deque<vector<string>> ladder_queue {{vector{begin_word}}};
+vector<string> generate_word_ladder_old(const string& begin_word, const string& end_word, const set<string>& word_list) {
+    queue<vector<string>> ladder_queue {{vector{begin_word}}};
     set visited = {begin_word};
 
     while (!ladder_queue.empty()) {
         vector<string> ladder = ladder_queue.front();
-        ladder_queue.pop_front();
+        ladder_queue.pop();
 
         for (const string& word : word_list) {
             if (!is_adjacent(word, ladder.back()))
@@ -85,9 +85,70 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             if (word == end_word)
                 return new_ladder;
 
-            ladder_queue.push_back(new_ladder);
+            ladder_queue.push(new_ladder);
         }
     }
+    return {};
+}
+
+vector<string> build_path(const string& intersect, unordered_map<string, string>& forward_parents, unordered_map<string, string>& backward_parents) {
+    vector<string> path;
+    string current = intersect;
+
+    while (!current.empty()) {
+        path.push_back(current);
+        current = forward_parents[current];
+    }
+
+    ranges::reverse(path);
+    current = backward_parents[intersect];
+
+    while (!current.empty()) {
+        path.push_back(current);
+        current = backward_parents[current];
+    }
+
+    return path;
+}
+
+bool process_level(queue<string>& q, unordered_map<string, string>& parents, const unordered_map<string, string>& other_parents, const set<string>& dict, string& intersect_word) {
+    const size_t level_size = q.size();
+    for (int i = 0; i < level_size; ++i) {
+        const string& current = q.front();
+        q.pop();
+
+        for (const string& next_word : dict) {
+            if (is_adjacent(current, next_word) && !parents.contains(next_word)) {
+                parents[next_word] = current;
+                q.push(next_word);
+                if (other_parents.contains(next_word)) {
+                    intersect_word = next_word;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
+    unordered_map<string, string> forward_parents, backward_parents;
+    queue<string> forward_q, backward_q;
+    string intersect_word;
+
+    forward_parents[begin_word] = "";
+    forward_q.push(begin_word);
+
+    backward_parents[end_word] = "";
+    backward_q.push(end_word);
+
+    while (!forward_q.empty() && !backward_q.empty()) {
+        if (process_level(forward_q, forward_parents, backward_parents, word_list, intersect_word))
+            return build_path(intersect_word, forward_parents, backward_parents);
+        if (process_level(backward_q, backward_parents, forward_parents, word_list, intersect_word))
+            return build_path(intersect_word, forward_parents, backward_parents);
+    }
+
     return {};
 }
 
