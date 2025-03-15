@@ -1,6 +1,8 @@
 #include "ladder.h"
 
 #include <numeric>
+#include <ranges>
+#include <algorithm>
 
 void error(string word1, string word2, string msg) {
     cerr << "Error (" << word1 << "," << word2 << "): " << msg << endl;
@@ -24,7 +26,7 @@ bool edit_distance_within(const string& s1, const string& s2, int d) {
                 current[j] = min(old_prev, min(current[j - 1], current[j])) + 1;
         }
     }
-    return current[s2.size()] == d;
+    return current[s2.size()] <= d;
 }
 
 bool is_adjacent(const string& s1, const string& s2) {
@@ -32,18 +34,21 @@ bool is_adjacent(const string& s1, const string& s2) {
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
-    queue<vector<string>> ladder_queue {{vector{begin_word}}};
+    deque<vector<string>> ladder_queue {{vector{begin_word}}};
     set visited = {begin_word};
 
     while (!ladder_queue.empty()) {
         vector<string> ladder = ladder_queue.front();
-        ladder_queue.pop();
+        ladder_queue.pop_front();
 
         for (const string& word : word_list) {
             if (!is_adjacent(word, ladder.back()))
                 continue;
 
             if (visited.contains(word))
+                continue;
+
+            if (ranges::any_of(ladder_queue, [word](vector<string> v) { return ranges::find(v, word) != v.end(); }))
                 continue;
 
             visited.insert(word);
@@ -53,7 +58,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             if (word == end_word)
                 return new_ladder;
 
-            ladder_queue.push(new_ladder);
+            ladder_queue.push_back(new_ladder);
         }
     }
     return {};
