@@ -1,0 +1,8 @@
+# ninja log v6
+1	532	1742070243251529451	CMakeFiles/ladder_main.dir/src/ladder_main.cpp.o	7b15bd8c788fe4f5
+0	818	1742070243251288327	CMakeFiles/ladder_main.dir/src/ladder.cpp.o	61b3068eae93ee07
+818	848	1742070244069124432	ladder_main	b873ab1345da0bf8
+5	711	1742070257410425759	CMakeFiles/ladder_main.dir/src/ladder.cpp.o	61b3068eae93ee07
+711	738	1742070258117115708	ladder_main	b873ab1345da0bf8
+10	790	1742071284174311816	CMakeFiles/ladder_main.dir/src/ladder.cpp.o	61b3068eae93ee07
+790	820	1742071284954249165	ladder_main	b873ab1345da0bf8
