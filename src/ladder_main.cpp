@@ -6,20 +6,9 @@ int main() {
     cout << is_adjacent("scat", "sat") << endl;
     cout << is_adjacent("cat", "scat") << endl;
 
-    set<string> words = {
-        "cat",
-        "car",
-        "cab",
-        "dab",
-        "scat",
-        "sat",
-        "sag",
-        "nag",
-        "nog",
-        "dog",
-        "cog",
-        "cot",
-    };
+    set<string> words;
+    load_words(words, "src/words.txt");
+    cout << "loaded words" << endl;
     for (const string& s : generate_word_ladder("cat", "dog", words))
         cout << s << ' ';
     cout << endl;
