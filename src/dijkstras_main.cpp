@@ -24,9 +24,7 @@ int main() {
         cout << d << endl;
 
     vector<int> path = extract_shortest_path(distances, previous, 2);
-    cout << "Path\n";
-    for (int n : path)
-        cout << n << endl;
+    print_path(path, distances[2]);
 
     return 0;
 }
