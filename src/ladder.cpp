@@ -111,13 +111,13 @@ vector<string> build_path(const string& intersect, unordered_map<string, string>
     return path;
 }
 
-bool process_level(queue<string>& q, unordered_map<string, string>& parents, const unordered_map<string, string>& other_parents, const set<string>& dict, string& intersect_word) {
+bool process_level(queue<string>& q, unordered_map<string, string>& parents, const unordered_map<string, string>& other_parents, const set<string>& word_list, string& intersect_word) {
     const size_t level_size = q.size();
     for (int i = 0; i < level_size; ++i) {
-        const string& current = q.front();
+        const string current = q.front();
         q.pop();
 
-        for (const string& next_word : dict) {
+        for (const string& next_word : word_list) {
             if (is_adjacent(current, next_word) && !parents.contains(next_word)) {
                 parents[next_word] = current;
                 q.push(next_word);
@@ -135,7 +135,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     if (!word_list.contains(end_word))
         return {};
     if (begin_word == end_word)
-        return {end_word};
+        return {};
 
     unordered_map<string, string> forward_parents, backward_parents;
     queue<string> forward_q, backward_q;
