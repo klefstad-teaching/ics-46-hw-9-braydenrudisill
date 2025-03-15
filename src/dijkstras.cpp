@@ -48,34 +48,3 @@ vector<int> extract_shortest_path(const vector<int> &distances, const vector<int
     reverse(path.begin(), path.end());
     return path;
 }
-
-
-int main() {
-    Graph G {{
-        {
-            {0, 1, 1}, {0, 2, 4}
-        },
-        {
-            {1, 2, 1}
-        },
-        {}
-    }, 3};
-
-    vector<int> previous(G.numVertices, -1);
-    vector<int> distances = dijkstras_shortest_path(G, 0, previous);
-
-    cout << "Previous\n";
-    for (int n : previous)
-        cout << n << endl;
-
-    cout << "Distances\n";
-    for (int d : distances)
-        cout << d << endl;
-
-    vector<int> path = extract_shortest_path(distances, previous, 2);
-    cout << "Path\n";
-    for (int n : path)
-        cout << n << endl;
-
-    return 0;
-}
