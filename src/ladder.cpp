@@ -132,6 +132,11 @@ bool process_level(queue<string>& q, unordered_map<string, string>& parents, con
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
+    if (!word_list.contains(end_word))
+        return {};
+    if (begin_word == end_word)
+        return {end_word};
+
     unordered_map<string, string> forward_parents, backward_parents;
     queue<string> forward_q, backward_q;
     string intersect_word;
