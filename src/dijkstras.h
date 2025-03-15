@@ -4,9 +4,9 @@
 #include <queue>
 #include <limits>
 #include <stack>
+#include <ranges>
 
 using namespace std;
-
 constexpr int INF = numeric_limits<int>::max();
 
 struct Edge {
@@ -27,6 +27,8 @@ struct Edge {
 
 struct Graph : public vector<vector<Edge>> {
     int numVertices=0;
+
+    vector<Edge> all_edges();
 };
 
 inline istream& operator>>(istream& in, Graph& G) {
@@ -48,5 +50,5 @@ inline void file_to_graph(const string& filename, Graph& G) {
 }
 
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous);
-vector<int> extract_shortest_path(const vector<int>& /*distances*/, const vector<int>& previous, int destination);
+vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination);
 void print_path(const vector<int>& v, int total);
