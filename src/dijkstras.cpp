@@ -5,10 +5,10 @@ struct Node {
     int distance_from_source;
 };
 
-struct NodeSourceDistLT
+struct NodeSourceDistGT
 {
     bool operator() (Node n1, Node n2) {
-        return n1.distance_from_source < n2.distance_from_source;
+        return n1.distance_from_source > n2.distance_from_source;
     }
 };
 
@@ -17,7 +17,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     previous.assign(G.numVertices, -1);
     vector<bool> visited(G.numVertices, false);
 
-    priority_queue<Node, vector<Node>, NodeSourceDistLT> node_queue;
+    priority_queue<Node, vector<Node>, NodeSourceDistGT> node_queue;
     node_queue.emplace(source, 0);
     distances[source] = 0;
 
