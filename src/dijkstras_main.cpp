@@ -26,5 +26,17 @@ int main() {
     vector<int> path = extract_shortest_path(distances, previous, 2);
     print_path(path, distances[2]);
 
+    Graph G2;
+    file_to_graph("src/small.txt", G2);
+
+    distances = dijkstra_shortest_path(G2, 0, previous);
+
+    cout << "Vertices: " << G2.numVertices << "\n";
+    for (int tgt = 0; tgt < G2.numVertices; tgt++) {
+        cout << "TGT: " << tgt << '\n';
+        path = extract_shortest_path(distances, previous, tgt);
+        print_path(path, distances[tgt]);
+    }
+
     return 0;
 }

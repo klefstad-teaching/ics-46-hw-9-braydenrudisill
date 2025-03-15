@@ -30,7 +30,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         visited[current.idx] = true;
 
         for (Edge edge : G[current.idx]) {
-            if (current.distance_from_source + edge.weight < distances[edge.dst]) {
+            if (!visited[edge.dst] && current.distance_from_source + edge.weight < distances[edge.dst]) {
                 distances[edge.dst] = current.distance_from_source + edge.weight;
                 previous[edge.dst] = current.idx;
                 node_queue.emplace(edge.dst, distances[edge.dst]);
