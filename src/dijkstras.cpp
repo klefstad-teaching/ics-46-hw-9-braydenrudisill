@@ -12,7 +12,7 @@ struct NodeSourceDistLT
     }
 };
 
-vector<int> dijkstras_shortest_path(const Graph& G, int source, vector<int>& previous) {
+vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
     vector<int> distances(G.numVertices, INF);
     previous.assign(G.numVertices, -1);
     vector<bool> visited(G.numVertices, false);
@@ -47,4 +47,9 @@ vector<int> extract_shortest_path(const vector<int> &distances, const vector<int
 
     reverse(path.begin(), path.end());
     return path;
+}
+
+void print_path(const vector<int> &v, int total) {
+    for (int i : v)
+        cout << i << ' ';
 }

@@ -13,7 +13,7 @@ int main() {
     }, 3};
 
     vector<int> previous(G.numVertices, -1);
-    vector<int> distances = dijkstras_shortest_path(G, 0, previous);
+    vector<int> distances = dijkstra_shortest_path(G, 0, previous);
 
     cout << "Previous\n";
     for (int n : previous)
