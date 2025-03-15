@@ -3,8 +3,7 @@
 int main() {
     cout << edit_distance_within("cat", "scat", 1) << endl;
     cout << edit_distance_within("scat", "sat", 1) << endl;
-    cout << is_adjacent("scat", "sat") << endl;
-    cout << is_adjacent("cat", "scat") << endl;
+    cout << is_adjacent("cat", "car") << endl;
 
     set<string> words;
     load_words(words, "src/words.txt");

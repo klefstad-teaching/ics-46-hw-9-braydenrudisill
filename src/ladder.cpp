@@ -29,8 +29,38 @@ bool edit_distance_within(const string& s1, const string& s2, int d) {
     return current[s2.size()] <= d;
 }
 
-bool is_adjacent(const string& s1, const string& s2) {
-    return edit_distance_within(s1, s2, 1);
+bool is_adjacent(string s1, string s2) {
+    int n = s1.length();
+    int m = s2.length();
+
+    if (n < m) {
+        std::swap(s1, s2);
+        std::swap(n,m);
+    }
+
+    if (n-m > 1)
+        return false;
+
+    int edits = 0;
+    int i = 0;
+    int j = 0;
+    while (i < n && j < m) {
+        if (s1[i] == s2[j])
+            ++j;
+        else {
+            if (n == m)
+                ++j;
+            if (edits++ == 1)
+                return false;
+        }
+
+        ++i;
+    }
+
+    if (i < n || j < m)
+        ++edits;
+
+    return edits <= 1;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
@@ -48,8 +78,10 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             if (visited.contains(word))
                 continue;
 
-            if (ranges::any_of(ladder_queue, [word](vector<string> v) { return ranges::find(v, word) != v.end(); }))
-                continue;
+            if (ranges::any_of(ladder_queue, [word, ladder](vector<string> v) {
+                return v.back() == word && v.size() < ladder.size();
+            }))
+                 continue;
 
             visited.insert(word);
             vector<string> new_ladder = ladder;
